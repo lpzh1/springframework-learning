@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 异常增强 -->
+    <bean id="transactionManager" class="com.aop.exception.TransactionManager"/>
+    <!-- 目标对象 -->
+    <bean id="forumServiceTarget" class="com.aop.exception.ForumService"/>
+
+    <!--  p:interceptorNames 用于指定增强bean，多个增强用逗号隔开 -->
+    <!-- p:proxyTargetClass  由于ForumService是一个类，没有接口，使用CGlib代理 -->
+    <bean id="forumService"
+          class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:proxyTargetClass="true"
+          p:target-ref="forumServiceTarget"
+          p:interceptorNames="transactionManager"/>
+</beans>

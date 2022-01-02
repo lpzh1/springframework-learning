@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       ">
+
+    <context:component-scan base-package="com.ioc">
+        <context:exclude-filter type="annotation" expression="com.ioc.anno.HibernateDao"/>
+    </context:component-scan>
+
+
+    <!-- 注意: !表示dev环境表示不被激活时  -->
+    <beans profile="!dev">
+
+        <bean id="hibernateDao" class="com.ioc.dao.HibernateDao"/>
+
+    </beans>
+</beans>

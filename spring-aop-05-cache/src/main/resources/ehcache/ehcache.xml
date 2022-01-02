@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+    <!-- 详细配置 -->
+    <!-- https://www.ehcache.org/documentation/3.8/examples.html -->
+
+    <!-- 声明一个名为"user"的缓存，最大容量50M，活动时间100秒 -->
+    <cache name="user"
+           maxBytesLocalHeap="50m"
+           timeToLiveSeconds="100"/>
+
+</ehcache>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 1. 定义实例工厂 -->
+    <!--    <bean id="daoFactory" class="com.aop.factory.FixedDepositRepositoryFactory"/>-->
+
+    <!-- 2. 使用工厂方法创建其他bean -->
+    <!--    <bean id="dao" factory-bean="daoFactory" factory-method="getDaoInstance">-->
+    <!--        <constructor-arg name="daoType" value="hibernate"/>-->
+    <!--    </bean>-->
+
+
+    <!-- 使用spring框架提供的工厂类 -->
+    <!-- 可以查看，spring框架本身提供了很多 FactoryBean 的实现类，其中含有创建代理对象的工厂 -->
+    <!--
+     注意:
+     1. 调用 context.getBean("dao1")返回的是 getObject()方法的返回值对象，而不是DaoFactoryBean类对象本身;
+     2. 要获得DaoFactoryBean本身，使用 context.getBean("&dao1")
+     -->
+    <bean id="dao1" class="com.aop.factory.DaoFactoryBean"/>
+
+
+</beans>

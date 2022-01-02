@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/p ">
+
+    <!-- 前置增强 -->
+    <bean id="greetingBeforeAdvice" class="com.aop.before.GreetingBeforeAdvice"/>
+    <!-- 后置增强 -->
+    <bean id="greetingAfterAdvice" class="com.aop.after.GreetingAfterAdvice"/>
+
+    <bean id="target" class="com.aop.service.NaiveWaiter"/>
+    <!--  p:interceptorNames 用于指定增强bean，多个增强用逗号隔开 -->
+    <bean id="waiter"
+          class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:proxyInterfaces="com.aop.service.Waiter"
+          p:target-ref="target"
+          p:interceptorNames="greetingBeforeAdvice,greetingAfterAdvice"/>
+
+</beans>

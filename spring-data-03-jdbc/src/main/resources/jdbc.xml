@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/jdbc
+        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+
+    <!-- TODO 需要在服务器上配置数据源（如Tomcat） -->
+    <!-- 设置resource-ref为true，jndi-name会自动添加前缀: java:comp/env/  -->
+    <!--<jee:jndi-lookup id="dataSource" jndi-name="/jndi/SpitterDS" resource-ref="true"/>-->
+
+    <!-- DBCP连接池（数据源） -->
+    <bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource"
+          p:driverClassName="org.h2.Driver"
+          p:url="jdbc:h2:tcp://localhost/~/spitter"
+          p:username="sa"
+          p:password=""
+          p:initialSize="5"
+          p:maxActive="10"/>
+
+
+    <!-- 使用命名空间配置嵌入式数据库-->
+    <jdbc:embedded-database id="dataSource2" type="H2">
+        <jdbc:script location="classpath:sql/schema.sql"/>
+        <jdbc:script location="classpath:sql/test-data.sql"/>
+    </jdbc:embedded-database>
+</beans>

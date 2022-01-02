@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- ① 这个brand属性将被工厂后处理器更改掉 -->
+    <bean id="car" class="com.aop.pojo.Car"
+          init-method="myInit"
+          destroy-method="myDestory"
+          p:brand="红旗CA72"
+          p:maxSpeed="200"/>
+
+    <!-- ② 工厂后处理器 -->
+    <bean id="myBeanPostProcessor" class="com.aop.lifecycle.application.MyBeanPostProcessor"/>
+    <!-- ③ 注册bean后处理器 -->
+    <bean id="myBeanFactoryPostProcessor" class="com.aop.lifecycle.application.MyBeanFactoryPostProcessor"/>
+    <!--② ③ 处注册的bean将会ApplicationContext自动识别并注册到容器中 -->
+
+    <!-- 注册MyInstantiationAwareBeanPostProcessor到容器 -->
+    <bean class="com.aop.lifecycle.application.MyInstantiationAwareBeanPostProcessor"/>
+
+</beans>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 单实例的bean在spring容器启动时，就被实例化 -->
+    <!-- 而 prototype bean则是在调用getBean时才会被实例化 -->
+    <!-- 如果 prototype bean 被 singleton bean 自动注入，也会在容器启动时实例化 -->
+
+    <bean id="customerRequestDao" class="com.aop.dao.CustomerRequestDao"/>
+
+    <bean id="customerRequestDetails" scope="prototype" class="com.aop.service.CustomerRequestDetails"/>
+
+    <!-- autowire属性相当于注解 @Autowire的作用-->
+    <!-- byType 会根据setter方法注入 。如果不提供setter方法就不会注入-->
+    <!--<bean id="customerRequestService" autowire="byType" class="com.aop.service.CustomerRequestService" />-->
+    <!-- constructor: 构造器自动注入 -->
+    <!--<bean id="customerRequestService" autowire="constructor" class="com.aop.service.CustomerRequestService"/>-->
+    <!-- byName: 根据 bean id 自动注入,也是通过setter方法注入-->
+    <bean id="customerRequestService" autowire="byName" class="com.aop.service.CustomerRequestService"/>
+
+</beans>

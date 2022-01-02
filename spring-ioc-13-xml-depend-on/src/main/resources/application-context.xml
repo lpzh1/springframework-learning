@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean初始化顺序和bean在xml文件中定义的顺序有关 -->
+    <!-- 如果前面的bean依赖后面的bean，可以使用depend-on属性指定依赖的bean，让被依赖的bean先被加载 -->
+    <!-- 读 -->
+    <bean id="fixedService" class="com.aop.service.FixedDepositService" depends-on="eventService">
+        <!-- 使用有参数的构造器实例化bean -->
+        <constructor-arg name="configFile" value="appConfig.properties"/>
+    </bean>
+
+
+    <!-- 写 -->
+    <bean id="eventService" class="com.aop.service.EventSenderSelectorService" destroy-method="destroy">
+        <!-- 使用有参数的构造器实例化bean -->
+        <constructor-arg name="configFile" value="appConfig.properties"/>
+    </bean>
+
+
+</beans>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 引介增强 -->
+    <bean id="pmonitor" class="com.aop.introduce.ControllablePerformaceMonitor"/>
+
+    <!-- 目标对象(被增强的对象) -->
+    <bean id="forumServiceTarget" class="com.aop.introduce.ForumService"/>
+
+    <!-- 生成代理类 -->
+    <bean id="forumService"
+          class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:interfaces="com.aop.introduce.Monitorable"
+          p:target-ref="forumServiceTarget"
+          p:interceptorNames="pmonitor"
+          p:proxyTargetClass="true"/>
+
+</beans>

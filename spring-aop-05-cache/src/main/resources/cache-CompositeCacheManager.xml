@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+    <bean id="cacheManager" class="org.springframework.cache.support.CompositeCacheManager">
+        <property name="cacheManagers">
+            <list>
+                <!-- 第一个缓存管理器 -->
+                <!--<bean class="org.springframework.cache.support.SimpleCacheManager">-->
+                <!--    <property name="caches">-->
+                <!--        <set>-->
+                <!--            <bean id="user" class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"></bean>-->
+                <!--        </set>-->
+                <!--    </property>-->
+                <!--</bean>-->
+                <!-- 第二个缓存管理器  -->
+                <bean class="org.springframework.cache.ehcache.EhCacheCacheManager">
+                    <constructor-arg name="cacheManager">
+                        <bean class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+                            <property name="configLocation" value="classpath:ehcache/ehcache.xml"/>
+                        </bean>
+                    </constructor-arg>
+                </bean>
+                <!-- 第三个缓存管理器: redis -->
+                <bean class="org.springframework.data.redis.cache.RedisCacheManager">
+                    <constructor-arg name="cacheWriter" ref="redisCacheWriter"/>
+                    <constructor-arg name="defaultCacheConfiguration" ref="redisCacheConfiguration"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="redisCacheWriter" class="org.springframework.data.redis.cache.DefaultRedisCacheWriter">
+        <constructor-arg>
+            <bean class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+                <!--<constructor-arg name="standaloneConfig">-->
+                <!--    <bean class=""></bean>-->
+                <!--</constructor-arg>-->
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="redisCacheConfiguration" class="org.springframework.data.redis.cache.RedisCacheConfiguration" factory-method="defaultCacheConfig">
+    </bean>
+
+</beans>

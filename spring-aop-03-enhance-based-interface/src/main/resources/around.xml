@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 环绕增强 -->
+    <bean id="greetingAroundAdvice" class="com.aop.around.GreetingInterceptor"/>
+    <!-- 目标对象 -->
+    <bean id="target" class="com.aop.service.NaiveWaiter"/>
+    <!-- 生成代理对象 -->
+    <!--  p:interceptorNames 用于指定增强bean，多个增强用逗号隔开 -->
+    <bean id="waiter"
+          class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:proxyInterfaces="com.aop.service.Waiter"
+          p:target-ref="target"
+          p:interceptorNames="greetingAroundAdvice"/>
+
+</beans>
